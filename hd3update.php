@@ -35,6 +35,12 @@ hd3_audit () {
 
 
 */
+require 'hd3-lib.php';
+
+
+
+
+
 $time_start = microtime(true);
 ini_set('memory_limit','512M');
 require 'rb-sqlite.php';
