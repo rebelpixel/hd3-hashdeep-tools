@@ -21,7 +21,7 @@ fclose($fd);
 
 
 if (empty($hash_str)) {
-    exit("Empty input.\n");
+    exit(error("Empty input.")) . "\n";
 }
 
 
@@ -137,9 +137,9 @@ echo 'Old total: '. $old_total ."\n";
 echo 'New total: '. $new_total ."\n";
 echo 'Unmodified: '. count($unchanged_list) ."\n";
 echo '--' ."\n";
-echo 'Modified/edited: '. count($edited_list) ."\n";
-echo 'New: '. count($new_list) ."\n";
-echo 'Now missing: '. count($missing) ."\n";
+echo 'Modified/edited: '. warn(count($edited_list)) ."\n";
+echo 'New: '. success(count($new_list)) ."\n";
+echo 'Now missing: '. error(count($missing)) ."\n";
 
 
 

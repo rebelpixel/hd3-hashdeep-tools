@@ -3,6 +3,8 @@
 /*
     hd3verifylist.php
 */
+require 'hd3-lib.php';
+
 $time_start = microtime(true);
 ini_set('memory_limit','512M');
 require 'rb-sqlite.php';
@@ -21,7 +23,7 @@ fclose($fd);
 
 
 if (empty($hash_str)) {
-    exit("Empty input.\n");
+    exit(error("Empty input.")) . "\n";
 }
 
 
@@ -140,25 +142,36 @@ echo '--' ."\n";
 echo 'Modified/edited: '. count($edited_list) ."\n";
 echo 'New: '. count($new_list) ."\n";
 echo 'Now missing: '. count($missing) ."\n";
+echo "\n";
 
 
 if (!empty($edited_list)) {
     echo "-------------\n";
-    echo "** MODIFIED/EDITED:\n";
-    echo implode("\n", $edited_list) ."\n";
+    // echo "** MODIFIED/EDITED:\n";
+    echo bold("** MODIFIED/EDITED:") . "\n";
+    // echo implode("\n", $edited_list) ."\n";
+    foreach ($edited_list as $line) {
+        echo warn('[edited]') . ' ' . $line . "\n";
+    }
 }
 
 if (!empty($new_list)) {
     echo "-------------\n";
-    echo "** NEW:\n";
-    echo implode("\n", $new_list) ."\n";
+    // echo "** NEW:\n";
+    bold("** NEW:") . "\n";
+    // echo implode("\n", $new_list) ."\n";
+    foreach ($new_list as $line) {
+        echo success('[new]') . ' ' . $line . "\n";
+    }
 }
 
 if (!empty($missing)) {
     echo "-------------\n";
-    echo "** NOW MISSING:\n";
+    // echo "** NOW MISSING:\n";
+    bold("** NOW MISSING:") . "\n";
     foreach ($missing as $miss) {
-        echo $miss->filename . "\n";
+        // echo $miss->filename . "\n";
+        echo error('[deleted]') . ' ' . $miss->filename . "\n";
     }
 }
 
@@ -185,25 +198,3 @@ echo 'Total execution time: ' .round((microtime(true) - $time_start), 4) ."s \n"
 
 
 
-function slugify($text) {
-    // replace non letter or digits by -
-    $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
-
-    // trim
-    $text = trim($text, '-');
-
-    // transliterate
-    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-
-    // lowercase
-    $text = strtolower($text);
-
-    // remove unwanted characters
-    $text = preg_replace('~[^-\w]+~', '', $text);
-
-    if (empty($text)) {
-      return 'n-a';
-    }
-
-    return $text;
-  }
