@@ -168,26 +168,3 @@ echo 'Memory limit: ' .ini_get('memory_limit') ." \n";
 echo 'Total execution time: ' .round((microtime(true) - $time_start), 4) ."s \n";
 
 
-
-function slugify($text) {
-    // replace non letter or digits by -
-    $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
-
-    // trim
-    $text = trim($text, '-');
-
-    // transliterate
-    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-
-    // lowercase
-    $text = strtolower($text);
-
-    // remove unwanted characters
-    $text = preg_replace('~[^-\w]+~', '', $text);
-
-    if (empty($text)) {
-      return 'n-a';
-    }
-
-    return $text;
-  }
