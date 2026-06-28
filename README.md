@@ -5,4 +5,4 @@ A set of cli scripts written for PHP, to be used with `hashdeep` to easily add f
 
 This is for my personal use and will most likely be not useful to most, but it's here anyway.
 
-Note: This does not provide versioning or backups, use `git` or `restic` for that.
+Note: This does not provide versioning for backups, use `git` or `restic` for that.
